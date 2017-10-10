@@ -2,6 +2,10 @@ require 'stringio'
 
 module RailsWebConsole
   class ConsoleController < ::ActionController::Base
+    before_action do 
+      authorize! :manage, :all
+    end
+
     if _process_action_callbacks.any?{|a| a.filter == :verify_authenticity_token}
       # ActionController::Base no longer protects from forgery in Rails 5
       skip_before_filter :verify_authenticity_token
